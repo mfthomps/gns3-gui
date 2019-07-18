@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/grossmj/PycharmProjects/gns3-gui/gns3/ui/main_window.ui'
+# Form implementation generated from reading ui file '/home/mike/gns3-2.1/gns3-gui/gns3/ui/main_window.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.1
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.gridlayout.addWidget(self.uiGraphicsView, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.uiCentralWidget)
         self.uiMenuBar = QtWidgets.QMenuBar(MainWindow)
-        self.uiMenuBar.setGeometry(QtCore.QRect(0, 0, 984, 40))
+        self.uiMenuBar.setGeometry(QtCore.QRect(0, 0, 984, 22))
         self.uiMenuBar.setObjectName("uiMenuBar")
         self.uiEditMenu = QtWidgets.QMenu(self.uiMenuBar)
         self.uiEditMenu.setObjectName("uiEditMenu")
@@ -390,9 +390,9 @@ class Ui_MainWindow(object):
         self.uiAddLinkAction.setCheckable(True)
         icon28 = QtGui.QIcon()
         icon28.addPixmap(QtGui.QPixmap(":/icons/connection-new.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon28.addPixmap(QtGui.QPixmap(":/icons/cancel-connection.svg"), QtGui.QIcon.Active, QtGui.QIcon.On)
-        icon28.addPixmap(QtGui.QPixmap(":/icons/connection-new-hover.svg"), QtGui.QIcon.Active, QtGui.QIcon.Off)
         icon28.addPixmap(QtGui.QPixmap(":/icons/cancel-connection.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon28.addPixmap(QtGui.QPixmap(":/icons/connection-new-hover.svg"), QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon28.addPixmap(QtGui.QPixmap(":/icons/cancel-connection.svg"), QtGui.QIcon.Active, QtGui.QIcon.On)
         self.uiAddLinkAction.setIcon(icon28)
         self.uiAddLinkAction.setObjectName("uiAddLinkAction")
         self.uiFitInViewAction = QtWidgets.QAction(MainWindow)
@@ -445,6 +445,16 @@ class Ui_MainWindow(object):
         icon33.addPixmap(QtGui.QPixmap(":/icons/vertically.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.uiDrawLineAction.setIcon(icon33)
         self.uiDrawLineAction.setObjectName("uiDrawLineAction")
+        self.uiCheckWorkAction = QtWidgets.QAction(MainWindow)
+        icon34 = QtGui.QIcon()
+        icon34.addPixmap(QtGui.QPixmap(":/images/checkmark.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.uiCheckWorkAction.setIcon(icon34)
+        self.uiCheckWorkAction.setObjectName("uiCheckWorkAction")
+        self.uiLabManualAction = QtWidgets.QAction(MainWindow)
+        icon35 = QtGui.QIcon()
+        icon35.addPixmap(QtGui.QPixmap(":/classic_icons/help-hover.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.uiLabManualAction.setIcon(icon35)
+        self.uiLabManualAction.setObjectName("uiLabManualAction")
         self.uiEditMenu.addAction(self.uiSelectAllAction)
         self.uiEditMenu.addAction(self.uiSelectNoneAction)
         self.uiEditMenu.addSeparator()
@@ -536,6 +546,8 @@ class Ui_MainWindow(object):
         self.uiAnnotationToolBar.addAction(self.uiDrawLineAction)
         self.uiAnnotationToolBar.addAction(self.uiZoomInAction)
         self.uiAnnotationToolBar.addAction(self.uiZoomOutAction)
+        self.uiAnnotationToolBar.addAction(self.uiLabManualAction)
+        self.uiAnnotationToolBar.addAction(self.uiCheckWorkAction)
         self.uiAnnotationToolBar.addAction(self.uiScreenshotAction)
 
         self.retranslateUi(MainWindow)
@@ -706,6 +718,10 @@ class Ui_MainWindow(object):
         self.uiEditProjectAction.setText(_translate("MainWindow", "Edit project"))
         self.uiWebInterfaceAction.setText(_translate("MainWindow", "Web interface"))
         self.uiDrawLineAction.setText(_translate("MainWindow", "Drawn line"))
+        self.uiCheckWorkAction.setText(_translate("MainWindow", "uiCheckWorkAction"))
+        self.uiCheckWorkAction.setToolTip(_translate("MainWindow", "Check work"))
+        self.uiLabManualAction.setText(_translate("MainWindow", "uiLabManualAction"))
+        self.uiLabManualAction.setToolTip(_translate("MainWindow", "Open lab manual"))
 
 from ..compute_summary_view import ComputeSummaryView
 from ..console_view import ConsoleView
