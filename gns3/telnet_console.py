@@ -19,7 +19,7 @@
 Functions to start external console terminals.
 """
 
-from .qt import QtCore
+from .qt import QtCore, QtWidgets
 
 import os
 import sys
@@ -30,6 +30,14 @@ from .controller import Controller
 
 import logging
 log = logging.getLogger(__name__)
+
+labtainer_dir = os.getenv('LABTAINER_DIR')
+if labtainer_dir is None:
+    log.debug('No LABTAINER_DIR environment variable')
+else:
+    sys.path.append(os.path.join(labtainer_dir, 'scripts', 'gns3'))
+    import labtainersGNS3
+
 
 console_mutex = QtCore.QMutex()
 
@@ -100,6 +108,16 @@ def nodeTelnetConsole(node, port, command=None):
 
     if not node.isStarted():
         return
+
+    settings = node.settings()
+    if 'image' in settings and 'labtainer' in settings['image']:
+        if labtainer_dir is None:
+            log.error('IS LABTAINER: %s, but no LABTAINER_DIR env variable.' % node.name())
+            return
+        log.debug('IS LABTAINER %s, do a moreterm' % node.name())
+        if not labtainersGNS3.moreTerm(settings['image'], settings['container_id'], log):
+            QtWidgets.QMessageBox.warning(MainWindow.instance(), "Console", "Terminal cannot be opened on this component.")
+
 
     if command is None:
         general_settings = MainWindow.instance().settings()
