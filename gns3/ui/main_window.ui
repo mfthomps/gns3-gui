@@ -38,7 +38,16 @@ background-none;
   </property>
   <widget class="QWidget" name="uiCentralWidget">
    <layout class="QGridLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <property name="spacing">
@@ -62,7 +71,7 @@ background-none;
      <x>0</x>
      <y>0</y>
      <width>984</width>
-     <height>40</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="uiEditMenu">
@@ -226,7 +235,16 @@ background-none;
      <property name="spacing">
       <number>0</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -410,7 +428,16 @@ background-none;
      <property name="spacing">
       <number>0</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -449,6 +476,8 @@ background-none;
    <addaction name="uiDrawLineAction"/>
    <addaction name="uiZoomInAction"/>
    <addaction name="uiZoomOutAction"/>
+   <addaction name="uiLabManualAction"/>
+   <addaction name="uiCheckWorkAction"/>
    <addaction name="uiScreenshotAction"/>
   </widget>
   <widget class="QDockWidget" name="uiTopologySummaryDockWidget">
@@ -475,7 +504,16 @@ background-none;
      </sizepolicy>
     </property>
     <layout class="QGridLayout">
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <property name="spacing">
@@ -519,7 +557,16 @@ background-none;
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QGridLayout" name="gridLayout">
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <property name="spacing">
@@ -1248,6 +1295,30 @@ background-none;
    </property>
    <property name="text">
     <string>Drawn line</string>
+   </property>
+  </action>
+  <action name="uiCheckWorkAction">
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/images/checkmark.png</normaloff>:/images/checkmark.png</iconset>
+   </property>
+   <property name="text">
+    <string>uiCheckWorkAction</string>
+   </property>
+   <property name="toolTip">
+    <string>Check work</string>
+   </property>
+  </action>
+  <action name="uiLabManualAction">
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/classic_icons/help-hover.svg</normaloff>:/classic_icons/help-hover.svg</iconset>
+   </property>
+   <property name="text">
+    <string>uiLabManualAction</string>
+   </property>
+   <property name="toolTip">
+    <string>Open lab manual</string>
    </property>
   </action>
  </widget>

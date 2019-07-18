@@ -23,6 +23,8 @@ import sys
 import os
 import time
 import logging
+import subprocess
+import shlex
 
 from .local_config import LocalConfig
 from .local_server import LocalServer
@@ -210,6 +212,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.uiImportExportConfigsAction.triggered.connect(self._importExportConfigsActionSlot)
         self.uiScreenshotAction.triggered.connect(self._screenshotActionSlot)
         self.uiSnapshotAction.triggered.connect(self._snapshotActionSlot)
+        self.uiCheckWorkAction.triggered.connect(self._checkWorkActionSlot)
+        self.uiLabManualAction.triggered.connect(self._labManualActionSlot)
         self.uiEditProjectAction.triggered.connect(self._editProjectActionSlot)
         self.uiDeleteProjectAction.triggered.connect(self._deleteProjectActionSlot)
 
@@ -668,6 +672,54 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         if not self.createScreenshot(path):
             QtWidgets.QMessageBox.critical(self, "Screenshot", "Could not create screenshot file {}".format(path))
+
+    def _labManualActionSlot(self):
+        cmd = None
+        labtainer_dir = os.getenv('LABTAINER_DIR')
+        lab_name = Topology.instance().project().name()
+        mf = '%s.pdf' % lab_name
+        lab_manual = os.path.join(labtainer_dir, 'labs', lab_name, 'docs', mf)
+        if not os.path.isfile(lab_manual):
+            read_first = os.path.join(labtainer_dir, 'labs', lab_name, 'docs', 'read_first.txt')
+            if os.path.isfile(read_first):
+                with open(read_first) as fh:
+                    for line in fh:
+                        if 'LAB_DOCS' in line:
+                            fname = line.rsplit('/',1)[1].strip()
+                            lab_manual = os.path.join(labtainer_dir, 'labs', lab_name, 'docs', fname)
+                            print('try %s' % lab_manual)
+                            if os.path.isfile(lab_manual):
+                                cmd = 'evince %s' % lab_manual
+                                print('cmd set to %s' % cmd)
+                                break
+                            else:
+                                print('not file %s' % lab_manual)
+            else:
+                print('No read first or lab manual %s' % read_first)
+        else: 
+            cmd = 'evince %s' % lab_manual
+        if cmd is not None:
+            log.debug('labManualAction cmd %s' % cmd)
+            os.system(cmd+' &')
+
+    def _checkWorkActionSlot(self):
+        ''' Invoke Labtainer checkwork function for this lab '''
+        labtainer_dir = os.getenv('LABTAINER_DIR')
+        lab_name = Topology.instance().project().name()
+        cmd = '%s %s' % (os.path.join(labtainer_dir, 'scripts', 'labtainer-student', 'bin', 'checkwork'), lab_name)
+        log.debug("check work cmd: %s" % cmd)
+        ps = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        output = ps.communicate()
+        if len(output[1].strip()) > 0:
+            log.debug('error return from checkwork' % output[1])
+            return 
+        result = output[0].strip()
+        msg_box = QtWidgets.QMessageBox() 
+        myfont = QtGui.QFont('Courier New', 10)
+        msg_box.setFont(myfont)
+        msg_box.setText(result.decode('utf-8'))
+        msg_box.exec()
+
 
     def _snapshotActionSlot(self):
         """

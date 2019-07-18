@@ -103,6 +103,7 @@
         <file>images/gns3_icon_128x128.png</file>
         <file>images/gns3_icon_256x256.png</file>
         <file>images/gns3.ico</file>
+        <file>images/checkmark.png</file>
         <file>classic_icons/add-link.svg</file>
         <file>classic_icons/add-link-hover.svg</file>
         <file>classic_icons/add-link-cancel.svg</file>
