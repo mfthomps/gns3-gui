@@ -117,7 +117,7 @@ def nodeTelnetConsole(node, port, command=None):
         log.debug('IS LABTAINER %s, do a moreterm' % node.name())
         if not labtainersGNS3.moreTerm(settings['image'], settings['container_id'], log):
             QtWidgets.QMessageBox.warning(MainWindow.instance(), "Console", "Terminal cannot be opened on this component.")
-
+        return
 
     if command is None:
         general_settings = MainWindow.instance().settings()
