@@ -75,7 +75,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Signal of settings updates
     settings_updated_signal = QtCore.Signal()
 
-    def __init__(self, parent=None, open_file=None):
+    def __init__(self, parent=None, open_file=None, student=False):
         """
         :param open_file: Open this file instead of asking for a new project
         """
@@ -196,6 +196,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # load initial stuff once the event loop isn't busy
         self.run_later(0, self.startupLoading)
+        if student:
+            ''' student view: hide widgets that may distract '''
+            self.uiBrowsersToolBar.hide()
+            self.uiTopologySummaryDockWidget.hide()
+            self.uiComputeSummaryDockWidget.hide()
+            self.uiConsoleDockWidget.hide()
+        else:
+            ''' gns3 remembers layout changes, so force them back '''
+            self.uiBrowsersToolBar.show()
+            self.uiTopologySummaryDockWidget.show()
+            self.uiComputeSummaryDockWidget.show()
+            self.uiConsoleDockWidget.show()
 
     def _connections(self):
         """

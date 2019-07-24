@@ -126,6 +126,7 @@ def main():
     parser.add_argument("-q", "--quiet", action="store_true", help="do not show logs on stdout")
     parser.add_argument("--config", help="Configuration file")
     parser.add_argument("--profile", help="Settings profile (blank will use default settings files)")
+    parser.add_argument("-s", "--student", action="store_true", help="Configure GUI for students.", default=False)
     options = parser.parse_args()
     exception_file_path = "exceptions.log"
 
@@ -279,7 +280,7 @@ def main():
     if not startup_file:
         startup_file = options.project
 
-    mainwindow = MainWindow(open_file=startup_file)
+    mainwindow = MainWindow(open_file=startup_file, student=options.student)
 
     # On OSX we can receive the file to open from a system event
     # loadPath is smart and will load only if a path is present
