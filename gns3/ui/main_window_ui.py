@@ -455,6 +455,11 @@ class Ui_MainWindow(object):
         icon35.addPixmap(QtGui.QPixmap(":/classic_icons/help-hover.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.uiLabManualAction.setIcon(icon35)
         self.uiLabManualAction.setObjectName("uiLabManualAction")
+        self.uiRestartLabAction = QtWidgets.QAction(MainWindow)
+        icon36 = QtGui.QIcon()
+        icon36.addPixmap(QtGui.QPixmap(":/icons/cancel.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.uiRestartLabAction.setIcon(icon36)
+        self.uiRestartLabAction.setObjectName("uiRestartLabAction")
         self.uiEditMenu.addAction(self.uiSelectAllAction)
         self.uiEditMenu.addAction(self.uiSelectNoneAction)
         self.uiEditMenu.addSeparator()
@@ -548,6 +553,7 @@ class Ui_MainWindow(object):
         self.uiAnnotationToolBar.addAction(self.uiZoomOutAction)
         self.uiAnnotationToolBar.addAction(self.uiLabManualAction)
         self.uiAnnotationToolBar.addAction(self.uiCheckWorkAction)
+        self.uiAnnotationToolBar.addAction(self.uiRestartLabAction)
         self.uiAnnotationToolBar.addAction(self.uiScreenshotAction)
 
         self.retranslateUi(MainWindow)
@@ -722,6 +728,8 @@ class Ui_MainWindow(object):
         self.uiCheckWorkAction.setToolTip(_translate("MainWindow", "Check work"))
         self.uiLabManualAction.setText(_translate("MainWindow", "uiLabManualAction"))
         self.uiLabManualAction.setToolTip(_translate("MainWindow", "Open lab manual"))
+        self.uiRestartLabAction.setText(_translate("MainWindow", "uiRestartLabAction"))
+        self.uiRestartLabAction.setToolTip(_translate("MainWindow", "Restart lab, losing previous work"))
 
 from ..compute_summary_view import ComputeSummaryView
 from ..console_view import ConsoleView

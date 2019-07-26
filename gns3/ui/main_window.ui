@@ -478,6 +478,7 @@ background-none;
    <addaction name="uiZoomOutAction"/>
    <addaction name="uiLabManualAction"/>
    <addaction name="uiCheckWorkAction"/>
+   <addaction name="uiRestartLabAction"/>
    <addaction name="uiScreenshotAction"/>
   </widget>
   <widget class="QDockWidget" name="uiTopologySummaryDockWidget">
@@ -1319,6 +1320,18 @@ background-none;
    </property>
    <property name="toolTip">
     <string>Open lab manual</string>
+   </property>
+  </action>
+  <action name="uiRestartLabAction">
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/icons/cancel.svg</normaloff>:/icons/cancel.svg</iconset>
+   </property>
+   <property name="text">
+    <string>uiRestartLabAction</string>
+   </property>
+   <property name="toolTip">
+    <string>Restart lab, losing previous work</string>
    </property>
   </action>
  </widget>

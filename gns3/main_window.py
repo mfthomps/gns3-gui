@@ -226,6 +226,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.uiSnapshotAction.triggered.connect(self._snapshotActionSlot)
         self.uiCheckWorkAction.triggered.connect(self._checkWorkActionSlot)
         self.uiLabManualAction.triggered.connect(self._labManualActionSlot)
+        self.uiRestartLabAction.triggered.connect(self._restartLabActionSlot)
         self.uiEditProjectAction.triggered.connect(self._editProjectActionSlot)
         self.uiDeleteProjectAction.triggered.connect(self._deleteProjectActionSlot)
 
@@ -684,6 +685,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         if not self.createScreenshot(path):
             QtWidgets.QMessageBox.critical(self, "Screenshot", "Could not create screenshot file {}".format(path))
+
+    def _restartLabActionSlot(self):
+        nodes = Topology.instance().nodes()
+        for node in nodes:
+            settings = node.settings()
+            if 'image' in settings and 'labtainer' in settings['image']:
+                cid = settings['container_id']
+                cmd = 'docker rm %s' % cid
+                ps = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+                output = ps.communicate()
+                if len(output[1]) > 0:
+                    log.error('Error removing container for %s' % settings['image'])
+                    return
+        #self._startAllActionSlot()
 
     def _labManualActionSlot(self):
         cmd = None
@@ -1182,9 +1197,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         :returns: False is a device is still running
         """
         # check if any node is running
-        topology = Topology.instance()
-        topology.project = Topology.instance().project()
-        for node in topology.nodes():
+        #topology = Topology.instance()
+        #topology.project = Topology.instance().project().nodes()
+        nodes = Topology.instance().project().nodes()
+        for node in nodes():
             if not node.isAlwaysOn() and node.status() == Node.started:
                 return True
         return False
