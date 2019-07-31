@@ -141,6 +141,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._screenshots_dir = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.PicturesLocation)
         self._pictures_dir = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.PicturesLocation)
 
+
         # add recent file actions to the File menu
         for i in range(0, self._maxrecent_files):
             action = QtWidgets.QAction(self.uiFileMenu)
@@ -729,24 +730,45 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             log.debug('labManualAction cmd %s' % cmd)
             os.system(cmd+' &')
 
+    def _longString(self, string):
+        retval = ''
+        count = 0
+        for line in string.splitlines():
+            if len(line) > len(retval):
+                retval = line
+            count += 1
+        return retval, count
+
     def _checkWorkActionSlot(self):
         ''' Invoke Labtainer checkwork function for this lab '''
         labtainer_dir = os.getenv('LABTAINER_DIR')
         lab_name = Topology.instance().project().name()
         cmd = '%s %s' % (os.path.join(labtainer_dir, 'scripts', 'labtainer-student', 'bin', 'checkwork'), lab_name)
         log.debug("check work cmd: %s" % cmd)
+        
         ps = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         output = ps.communicate()
         if len(output[1].strip()) > 0:
             log.debug('error return from checkwork' % output[1])
             return 
         result = output[0].strip()
-        msg_box = QtWidgets.QMessageBox() 
+        rstring = result.decode('utf-8') 
+        work_dialog = QtWidgets.QDialog()
+        ok = QtWidgets.QPushButton("ok", work_dialog)
+        work_dialog.setWindowTitle("Check Work")
+        label = QtWidgets.QLabel(work_dialog)
         myfont = QtGui.QFont('Courier New', 10)
-        msg_box.setFont(myfont)
-        msg_box.setText(result.decode('utf-8'))
-        msg_box.exec()
+        label.setFont(myfont)
+        label.setText(rstring)
+        metrics = QtGui.QFontMetrics(myfont)
+        long_str, lines = self._longString(rstring)
+        width = metrics.width(long_str) + 50
+        height = 20*lines
+        work_dialog.resize(width, height)
+        ok.move(width/2, height-30)
 
+        ok.clicked.connect(work_dialog.close)
+        work_dialog.exec()
 
     def _snapshotActionSlot(self):
         """
