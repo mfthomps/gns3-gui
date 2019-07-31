@@ -741,6 +741,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def _checkWorkActionSlot(self):
         ''' Invoke Labtainer checkwork function for this lab '''
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         labtainer_dir = os.getenv('LABTAINER_DIR')
         lab_name = Topology.instance().project().name()
         cmd = '%s %s' % (os.path.join(labtainer_dir, 'scripts', 'labtainer-student', 'bin', 'checkwork'), lab_name)
@@ -751,6 +752,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if len(output[1].strip()) > 0:
             log.debug('error return from checkwork' % output[1])
             return 
+        QtWidgets.QApplication.restoreOverrideCursor()
         result = output[0].strip()
         rstring = result.decode('utf-8') 
         work_dialog = QtWidgets.QDialog()
