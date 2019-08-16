@@ -1313,7 +1313,7 @@ background-none;
   <action name="uiLabManualAction">
    <property name="icon">
     <iconset resource="../../resources/resources.qrc">
-     <normaloff>:/classic_icons/help-hover.svg</normaloff>:/classic_icons/help-hover.svg</iconset>
+     <normaloff>:/images/ManualIcon.png</normaloff>:/images/ManualIcon.png</iconset>
    </property>
    <property name="text">
     <string>uiLabManualAction</string>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/mike/gns3-2.1/gns3-gui/gns3/ui/main_window.ui'
+# Form implementation generated from reading ui file '/home/dan/Labtainer_GNS3/gns3-gui/gns3/ui/main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.10.1
 #
@@ -452,7 +452,7 @@ class Ui_MainWindow(object):
         self.uiCheckWorkAction.setObjectName("uiCheckWorkAction")
         self.uiLabManualAction = QtWidgets.QAction(MainWindow)
         icon35 = QtGui.QIcon()
-        icon35.addPixmap(QtGui.QPixmap(":/classic_icons/help-hover.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon35.addPixmap(QtGui.QPixmap(":/images/ManualIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.uiLabManualAction.setIcon(icon35)
         self.uiLabManualAction.setObjectName("uiLabManualAction")
         self.uiRestartLabAction = QtWidgets.QAction(MainWindow)
