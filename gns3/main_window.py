@@ -117,6 +117,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._local_config_timer.start(1000)  # milliseconds
         self._analytics_client = AnalyticsClient()
         self._appliance_manager = ApplianceManager()
+        self.student = student
+        self._reset_containers = False
+        if not student:
+            self._reset_containers = True
 
         # restore the geometry and state of the main window.
         self.restoreGeometry(QtCore.QByteArray().fromBase64(self._settings["geometry"].encode()))
@@ -888,6 +892,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """
         Slot called when starting all the nodes.
         """
+        #Restart the containers on the first run of startall when not in student mode
+        if self._reset_containers:
+            self._restartLabActionSlot()
+            self._reset_containers = False
+
         project = Topology.instance().project()
         if project is not None:
             project.start_all_nodes()
