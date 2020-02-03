@@ -64,6 +64,12 @@ from .items.logo_item import  LogoItem
 
 log = logging.getLogger(__name__)
 
+labtainer_dir = os.getenv('LABTAINER_DIR')
+if labtainer_dir is None:
+    log.debug('No LABTAINER_DIR environment variable')
+else:
+    sys.path.append(os.path.join(labtainer_dir, 'scripts', 'gns3'))
+    import labtainersGNS3
 
 class GraphicsView(QtWidgets.QGraphicsView):
 
@@ -801,6 +807,12 @@ class GraphicsView(QtWidgets.QGraphicsView):
             menu.addAction(export_config_action)
 
         if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
+            insert_thumb_action = QtWidgets.QAction("Insert thumb drive", menu)
+            insert_thumb_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
+            insert_thumb_action.triggered.connect(self.insertThumbDriveSlot)
+            menu.addAction(insert_thumb_action)
+
+        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
             export_config_action = QtWidgets.QAction("Edit config", menu)
             export_config_action.setIcon(QtGui.QIcon(':/icons/edit.svg'))
             export_config_action.triggered.connect(self.editConfigActionSlot)
@@ -1212,6 +1224,26 @@ class GraphicsView(QtWidgets.QGraphicsView):
             dialog = FileEditorDialog(item.node(), config_file, parent=self)
             dialog.show()
             dialog.exec_()
+
+    def insertThumbDriveSlot(self):
+        ''' simulate insertion of a usb drive '''
+        items = self.scene().selectedItems()
+        if len(items) != 1:
+            QtWidgets.QMessageBox.critical(self, "Command line", "Please select only one item")
+            return
+        item = items[0]
+        if isinstance(item, NodeItem):
+            device = item.node()
+            settings = device.settings()
+            if 'image' in settings and 'labtainer' in settings['image']:
+                if labtainer_dir is None:
+                    log.error('IS LABTAINER: %s, but no LABTAINER_DIR env variable.' % device.name())
+                    return
+                log.debug('IS LABTAINER %s, do a thumb insert' % device.name())
+                if not labtainersGNS3.thumbInsert(settings['image'], settings['container_id'], log):
+                    QtWidgets.QMessageBox.warning(self, "Console", "Thumb drivers cannot be inserted on this component.")
+                return
+        print('Thumb drive inserted')
 
     def exportConfigActionSlot(self):
         """
