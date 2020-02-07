@@ -735,185 +735,185 @@ class GraphicsView(QtWidgets.QGraphicsView):
         items = self.scene().selectedItems()
         if not items:
             return
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configPage"), items)):
-            configure_action = QtWidgets.QAction("Configure", menu)
-            configure_action.setIcon(QtGui.QIcon(':/icons/configuration.svg'))
-            configure_action.triggered.connect(self.configureActionSlot)
-            menu.addAction(configure_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem), items)):
-            # Action: Change hostname
-            change_hostname_action = QtWidgets.QAction("Change hostname", menu)
-            change_hostname_action.setIcon(QtGui.QIcon(':/icons/show-hostname.svg'))
-            change_hostname_action.triggered.connect(self.changeHostnameActionSlot)
-            menu.addAction(change_hostname_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem), items)):
-            # Action: Change symbol
-            change_symbol_action = QtWidgets.QAction("Change symbol", menu)
-            change_symbol_action.setIcon(QtGui.QIcon(':/icons/node_conception.svg'))
-            change_symbol_action.triggered.connect(self.changeSymbolActionSlot)
-            menu.addAction(change_symbol_action)
-
-        if True in list(map(lambda item: isinstance(item, DrawingItem) or isinstance(item, NodeItem), items)):
-            duplicate_action = QtWidgets.QAction("Duplicate", menu)
-            duplicate_action.setIcon(QtGui.QIcon(':/icons/new.svg'))
-            duplicate_action.triggered.connect(self.duplicateActionSlot)
-            menu.addAction(duplicate_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "nodeDir"), items)):
-            # Action: Show in file manager
-            show_in_file_manager_action = QtWidgets.QAction("Show in file manager", menu)
-            show_in_file_manager_action.setIcon(QtGui.QIcon(':/icons/open.svg'))
-            show_in_file_manager_action.triggered.connect(self.showInFileManagerSlot)
-            menu.addAction(show_in_file_manager_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "console"), items)):
-            console_action = QtWidgets.QAction("Console", menu)
-            console_action.setIcon(QtGui.QIcon(':/icons/console.svg'))
-            console_action.triggered.connect(self.consoleActionSlot)
-            menu.addAction(console_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "console"), items)):
-            console_edit_action = QtWidgets.QAction("Custom console", menu)
-            console_edit_action.setIcon(QtGui.QIcon(':/icons/console_edit.svg'))
-            console_edit_action.triggered.connect(self.customConsoleActionSlot)
-            menu.addAction(console_edit_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "auxConsole"), items)):
-            aux_console_action = QtWidgets.QAction("Auxiliary console", menu)
-            aux_console_action.setIcon(QtGui.QIcon(':/icons/aux-console.svg'))
-            aux_console_action.triggered.connect(self.auxConsoleActionSlot)
-            menu.addAction(aux_console_action)
-
-        if sys.platform.startswith("win") and True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "bringToFront"), items)):
-            # Action: bring console or window to front (Windows only)
-            bring_to_front_action = QtWidgets.QAction("Bring to front", menu)
-            bring_to_front_action.setIcon(QtGui.QIcon(':/icons/front.svg'))
-            bring_to_front_action.triggered.connect(self.bringToFrontSlot)
-            menu.addAction(bring_to_front_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
-            import_config_action = QtWidgets.QAction("Import config", menu)
-            import_config_action.setIcon(QtGui.QIcon(':/icons/import_config.svg'))
-            import_config_action.triggered.connect(self.importConfigActionSlot)
-            menu.addAction(import_config_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
-            export_config_action = QtWidgets.QAction("Export config", menu)
-            export_config_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
-            export_config_action.triggered.connect(self.exportConfigActionSlot)
-            menu.addAction(export_config_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
-            insert_thumb_action = QtWidgets.QAction("Insert thumb drive", menu)
-            insert_thumb_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
-            insert_thumb_action.triggered.connect(self.insertThumbDriveSlot)
-            menu.addAction(insert_thumb_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
-            export_config_action = QtWidgets.QAction("Edit config", menu)
-            export_config_action.setIcon(QtGui.QIcon(':/icons/edit.svg'))
-            export_config_action.triggered.connect(self.editConfigActionSlot)
-            menu.addAction(export_config_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "idlepc"), items)):
-            idlepc_action = QtWidgets.QAction("Idle-PC", menu)
-            idlepc_action.setIcon(QtGui.QIcon(':/icons/calculate.svg'))
-            idlepc_action.triggered.connect(self.idlepcActionSlot)
-            menu.addAction(idlepc_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "idlepc"), items)):
-            auto_idlepc_action = QtWidgets.QAction("Auto Idle-PC", menu)
-            auto_idlepc_action.setIcon(QtGui.QIcon(':/icons/calculate.svg'))
-            auto_idlepc_action.triggered.connect(self.autoIdlepcActionSlot)
-            menu.addAction(auto_idlepc_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and not item.node().isAlwaysOn(), items)):
-            start_action = QtWidgets.QAction("Start", menu)
-            start_action.setIcon(QtGui.QIcon(':/icons/start.svg'))
-            start_action.triggered.connect(self.startActionSlot)
-            menu.addAction(start_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and not item.node().isAlwaysOn(), items)):
-            suspend_action = QtWidgets.QAction("Suspend", menu)
-            suspend_action.setIcon(QtGui.QIcon(':/icons/pause.svg'))
-            suspend_action.triggered.connect(self.suspendActionSlot)
-            menu.addAction(suspend_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and not item.node().isAlwaysOn(), items)):
-            stop_action = QtWidgets.QAction("Stop", menu)
-            stop_action.setIcon(QtGui.QIcon(':/icons/stop.svg'))
-            stop_action.triggered.connect(self.stopActionSlot)
-            menu.addAction(stop_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and not item.node().isAlwaysOn(), items)):
-            reload_action = QtWidgets.QAction("Reload", menu)
-            reload_action.setIcon(QtGui.QIcon(':/icons/reload.svg'))
-            reload_action.triggered.connect(self.reloadActionSlot)
-            menu.addAction(reload_action)
-
-        if True in list(map(lambda item: isinstance(item, NoteItem), items)):
-            text_edit_action = QtWidgets.QAction("Text edit", menu)
-            text_edit_action.setIcon(QtGui.QIcon(':/icons/show-hostname.svg'))
-            text_edit_action.triggered.connect(self.textEditActionSlot)
-            menu.addAction(text_edit_action)
-
-        if True in list(map(lambda item: isinstance(item, TextItem), items)):
-            text_edit_action = QtWidgets.QAction("Text edit", menu)
-            text_edit_action.setIcon(QtGui.QIcon(':/icons/edit.svg'))
-            text_edit_action.triggered.connect(self.textEditActionSlot)
-            menu.addAction(text_edit_action)
-
-        if True in list(map(lambda item: isinstance(item, ShapeItem) or isinstance(item, LineItem), items)):
-            style_action = QtWidgets.QAction("Style", menu)
-            style_action.setIcon(QtGui.QIcon(':/icons/drawing.svg'))
-            style_action.triggered.connect(self.styleActionSlot)
-            menu.addAction(style_action)
-
-        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "commandLine"), items)):
-            # Action: Get command line
-            show_in_file_manager_action = QtWidgets.QAction("Command line", menu)
-            show_in_file_manager_action.setIcon(QtGui.QIcon(':/icons/console.svg'))
-            show_in_file_manager_action.triggered.connect(self.getCommandLineSlot)
-            menu.addAction(show_in_file_manager_action)
-
-        if True in list(map(lambda item: isinstance(item, NoteItem), items)) and False in list(map(lambda item: item.parentItem() is None, items)):
-            # action only for port labels
-            reset_label_position_action = QtWidgets.QAction("Reset position", menu)
-            reset_label_position_action.setIcon(QtGui.QIcon(':/icons/reset.svg'))
-            reset_label_position_action.triggered.connect(self.resetLabelPositionActionSlot)
-            menu.addAction(reset_label_position_action)
-
-        # item must have no parent
-        if True in list(map(lambda item: item.parentItem() is None, items)):
-
-            if len(items) > 1:
-                horizontal_align_action = QtWidgets.QAction("Align horizontally", menu)
-                horizontal_align_action.setIcon(QtGui.QIcon(':/icons/horizontally.svg'))
-                horizontal_align_action.triggered.connect(self.horizontalAlignmentSlot)
-                menu.addAction(horizontal_align_action)
-
-                vertical_align_action = QtWidgets.QAction("Align vertically", menu)
-                vertical_align_action.setIcon(QtGui.QIcon(':/icons/vertically.svg'))
-                vertical_align_action.triggered.connect(self.verticalAlignmentSlot)
-                menu.addAction(vertical_align_action)
-
-            raise_layer_action = QtWidgets.QAction("Raise one layer", menu)
-            raise_layer_action.setIcon(QtGui.QIcon(':/icons/raise_z_value.svg'))
-            raise_layer_action.triggered.connect(self.raiseLayerActionSlot)
-            menu.addAction(raise_layer_action)
-
-            lower_layer_action = QtWidgets.QAction("Lower one layer", menu)
-            lower_layer_action.setIcon(QtGui.QIcon(':/icons/lower_z_value.svg'))
-            lower_layer_action.triggered.connect(self.lowerLayerActionSlot)
-            menu.addAction(lower_layer_action)
-
-            delete_action = QtWidgets.QAction("Delete", menu)
-            delete_action.setIcon(QtGui.QIcon(':/icons/delete.svg'))
-            delete_action.triggered.connect(self.deleteActionSlot)
-            menu.addAction(delete_action)
+        if not self._main_window.student:
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configPage"), items)):
+                configure_action = QtWidgets.QAction("Configure", menu)
+                configure_action.setIcon(QtGui.QIcon(':/icons/configuration.svg'))
+                configure_action.triggered.connect(self.configureActionSlot)
+                menu.addAction(configure_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem), items)):
+                # Action: Change hostname
+                change_hostname_action = QtWidgets.QAction("Change hostname", menu)
+                change_hostname_action.setIcon(QtGui.QIcon(':/icons/show-hostname.svg'))
+                change_hostname_action.triggered.connect(self.changeHostnameActionSlot)
+                menu.addAction(change_hostname_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem), items)):
+                # Action: Change symbol
+                change_symbol_action = QtWidgets.QAction("Change symbol", menu)
+                change_symbol_action.setIcon(QtGui.QIcon(':/icons/node_conception.svg'))
+                change_symbol_action.triggered.connect(self.changeSymbolActionSlot)
+                menu.addAction(change_symbol_action)
+    
+            if True in list(map(lambda item: isinstance(item, DrawingItem) or isinstance(item, NodeItem), items)):
+                duplicate_action = QtWidgets.QAction("Duplicate", menu)
+                duplicate_action.setIcon(QtGui.QIcon(':/icons/new.svg'))
+                duplicate_action.triggered.connect(self.duplicateActionSlot)
+                menu.addAction(duplicate_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "nodeDir"), items)):
+                # Action: Show in file manager
+                show_in_file_manager_action = QtWidgets.QAction("Show in file manager", menu)
+                show_in_file_manager_action.setIcon(QtGui.QIcon(':/icons/open.svg'))
+                show_in_file_manager_action.triggered.connect(self.showInFileManagerSlot)
+                menu.addAction(show_in_file_manager_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "console"), items)):
+                console_action = QtWidgets.QAction("Console", menu)
+                console_action.setIcon(QtGui.QIcon(':/icons/console.svg'))
+                console_action.triggered.connect(self.consoleActionSlot)
+                menu.addAction(console_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "console"), items)):
+                console_edit_action = QtWidgets.QAction("Custom console", menu)
+                console_edit_action.setIcon(QtGui.QIcon(':/icons/console_edit.svg'))
+                console_edit_action.triggered.connect(self.customConsoleActionSlot)
+                menu.addAction(console_edit_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "auxConsole"), items)):
+                aux_console_action = QtWidgets.QAction("Auxiliary console", menu)
+                aux_console_action.setIcon(QtGui.QIcon(':/icons/aux-console.svg'))
+                aux_console_action.triggered.connect(self.auxConsoleActionSlot)
+                menu.addAction(aux_console_action)
+    
+            if sys.platform.startswith("win") and True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "bringToFront"), items)):
+                # Action: bring console or window to front (Windows only)
+                bring_to_front_action = QtWidgets.QAction("Bring to front", menu)
+                bring_to_front_action.setIcon(QtGui.QIcon(':/icons/front.svg'))
+                bring_to_front_action.triggered.connect(self.bringToFrontSlot)
+                menu.addAction(bring_to_front_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
+                import_config_action = QtWidgets.QAction("Import config", menu)
+                import_config_action.setIcon(QtGui.QIcon(':/icons/import_config.svg'))
+                import_config_action.triggered.connect(self.importConfigActionSlot)
+                menu.addAction(import_config_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
+                export_config_action = QtWidgets.QAction("Export config", menu)
+                export_config_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
+                export_config_action.triggered.connect(self.exportConfigActionSlot)
+                menu.addAction(export_config_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
+                export_config_action = QtWidgets.QAction("Edit config", menu)
+                export_config_action.setIcon(QtGui.QIcon(':/icons/edit.svg'))
+                export_config_action.triggered.connect(self.editConfigActionSlot)
+                menu.addAction(export_config_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "idlepc"), items)):
+                idlepc_action = QtWidgets.QAction("Idle-PC", menu)
+                idlepc_action.setIcon(QtGui.QIcon(':/icons/calculate.svg'))
+                idlepc_action.triggered.connect(self.idlepcActionSlot)
+                menu.addAction(idlepc_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "idlepc"), items)):
+                auto_idlepc_action = QtWidgets.QAction("Auto Idle-PC", menu)
+                auto_idlepc_action.setIcon(QtGui.QIcon(':/icons/calculate.svg'))
+                auto_idlepc_action.triggered.connect(self.autoIdlepcActionSlot)
+                menu.addAction(auto_idlepc_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and not item.node().isAlwaysOn(), items)):
+                start_action = QtWidgets.QAction("Start", menu)
+                start_action.setIcon(QtGui.QIcon(':/icons/start.svg'))
+                start_action.triggered.connect(self.startActionSlot)
+                menu.addAction(start_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and not item.node().isAlwaysOn(), items)):
+                suspend_action = QtWidgets.QAction("Suspend", menu)
+                suspend_action.setIcon(QtGui.QIcon(':/icons/pause.svg'))
+                suspend_action.triggered.connect(self.suspendActionSlot)
+                menu.addAction(suspend_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and not item.node().isAlwaysOn(), items)):
+                stop_action = QtWidgets.QAction("Stop", menu)
+                stop_action.setIcon(QtGui.QIcon(':/icons/stop.svg'))
+                stop_action.triggered.connect(self.stopActionSlot)
+                menu.addAction(stop_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and not item.node().isAlwaysOn(), items)):
+                reload_action = QtWidgets.QAction("Reload", menu)
+                reload_action.setIcon(QtGui.QIcon(':/icons/reload.svg'))
+                reload_action.triggered.connect(self.reloadActionSlot)
+                menu.addAction(reload_action)
+    
+            if True in list(map(lambda item: isinstance(item, NoteItem), items)):
+                text_edit_action = QtWidgets.QAction("Text edit", menu)
+                text_edit_action.setIcon(QtGui.QIcon(':/icons/show-hostname.svg'))
+                text_edit_action.triggered.connect(self.textEditActionSlot)
+                menu.addAction(text_edit_action)
+    
+            if True in list(map(lambda item: isinstance(item, TextItem), items)):
+                text_edit_action = QtWidgets.QAction("Text edit", menu)
+                text_edit_action.setIcon(QtGui.QIcon(':/icons/edit.svg'))
+                text_edit_action.triggered.connect(self.textEditActionSlot)
+                menu.addAction(text_edit_action)
+    
+            if True in list(map(lambda item: isinstance(item, ShapeItem) or isinstance(item, LineItem), items)):
+                style_action = QtWidgets.QAction("Style", menu)
+                style_action.setIcon(QtGui.QIcon(':/icons/drawing.svg'))
+                style_action.triggered.connect(self.styleActionSlot)
+                menu.addAction(style_action)
+    
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "commandLine"), items)):
+                # Action: Get command line
+                show_in_file_manager_action = QtWidgets.QAction("Command line", menu)
+                show_in_file_manager_action.setIcon(QtGui.QIcon(':/icons/console.svg'))
+                show_in_file_manager_action.triggered.connect(self.getCommandLineSlot)
+                menu.addAction(show_in_file_manager_action)
+    
+            if True in list(map(lambda item: isinstance(item, NoteItem), items)) and False in list(map(lambda item: item.parentItem() is None, items)):
+                # action only for port labels
+                reset_label_position_action = QtWidgets.QAction("Reset position", menu)
+                reset_label_position_action.setIcon(QtGui.QIcon(':/icons/reset.svg'))
+                reset_label_position_action.triggered.connect(self.resetLabelPositionActionSlot)
+                menu.addAction(reset_label_position_action)
+    
+            # item must have no parent
+            if True in list(map(lambda item: item.parentItem() is None, items)):
+    
+                if len(items) > 1:
+                    horizontal_align_action = QtWidgets.QAction("Align horizontally", menu)
+                    horizontal_align_action.setIcon(QtGui.QIcon(':/icons/horizontally.svg'))
+                    horizontal_align_action.triggered.connect(self.horizontalAlignmentSlot)
+                    menu.addAction(horizontal_align_action)
+    
+                    vertical_align_action = QtWidgets.QAction("Align vertically", menu)
+                    vertical_align_action.setIcon(QtGui.QIcon(':/icons/vertically.svg'))
+                    vertical_align_action.triggered.connect(self.verticalAlignmentSlot)
+                    menu.addAction(vertical_align_action)
+    
+                raise_layer_action = QtWidgets.QAction("Raise one layer", menu)
+                raise_layer_action.setIcon(QtGui.QIcon(':/icons/raise_z_value.svg'))
+                raise_layer_action.triggered.connect(self.raiseLayerActionSlot)
+                menu.addAction(raise_layer_action)
+    
+                lower_layer_action = QtWidgets.QAction("Lower one layer", menu)
+                lower_layer_action.setIcon(QtGui.QIcon(':/icons/lower_z_value.svg'))
+                lower_layer_action.triggered.connect(self.lowerLayerActionSlot)
+                menu.addAction(lower_layer_action)
+    
+                delete_action = QtWidgets.QAction("Delete", menu)
+                delete_action.setIcon(QtGui.QIcon(':/icons/delete.svg'))
+                delete_action.triggered.connect(self.deleteActionSlot)
+                menu.addAction(delete_action)
+        else: 
+            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
+                insert_thumb_action = QtWidgets.QAction("Insert thumb drive", menu)
+                insert_thumb_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
+                insert_thumb_action.triggered.connect(self.insertThumbDriveSlot)
+                menu.addAction(insert_thumb_action)
 
     def startActionSlot(self):
         """
