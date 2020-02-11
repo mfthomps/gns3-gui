@@ -364,6 +364,11 @@ class GraphicsView(QtWidgets.QGraphicsView):
         else:
             link_item = EthernetLinkItem(source_item, source_port, destination_item, destination_port, link)
         self.scene().addItem(link_item)
+        ''' Labtainers: determine if link should be hidden '''
+        if self.isHidden(source_item.node()):
+            link_item.hide()
+        elif self.isHidden(destination_item.node()):
+            link_item.hide()
 
     def deleteLinkSlot(self, link_id):
         """
@@ -908,12 +913,11 @@ class GraphicsView(QtWidgets.QGraphicsView):
                 delete_action.setIcon(QtGui.QIcon(':/icons/delete.svg'))
                 delete_action.triggered.connect(self.deleteActionSlot)
                 menu.addAction(delete_action)
-        else: 
-            if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
-                insert_thumb_action = QtWidgets.QAction("Insert thumb drive", menu)
-                insert_thumb_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
-                insert_thumb_action.triggered.connect(self.insertThumbDriveSlot)
-                menu.addAction(insert_thumb_action)
+        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
+            insert_thumb_action = QtWidgets.QAction("Insert thumb drive", menu)
+            insert_thumb_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
+            insert_thumb_action.triggered.connect(self.insertThumbDriveSlot)
+            menu.addAction(insert_thumb_action)
 
     def startActionSlot(self):
         """
@@ -1570,6 +1574,9 @@ class GraphicsView(QtWidgets.QGraphicsView):
         node.error_signal.connect(self._displayNodeErrorSlot)
         node.server_error_signal.connect(self._displayNodeErrorSlot)
 
+        if self.isHidden(node):
+            node_item.hide()
+
         return node_item
 
     @qslot
@@ -1585,7 +1592,6 @@ class GraphicsView(QtWidgets.QGraphicsView):
             QtWidgets.QMessageBox.critical(self._main_window, name, message.strip())
 
     def createDrawingItem(self, type, x, y, z, rotation=0, svg=None, drawing_id=None):
-
         if type == "ellipse":
             item = EllipseItem(pos=QtCore.QPoint(x, y), z=z, rotation=rotation, project=self._topology.project(), drawing_id=drawing_id, svg=svg)
         elif type == "rect":
@@ -1631,3 +1637,18 @@ class GraphicsView(QtWidgets.QGraphicsView):
             self._main_window.uiDeviceMenu.setEnabled(True)
         else:
             self._main_window.uiDeviceMenu.setEnabled(False)
+
+    def isHidden(self, node):
+        if self._main_window.student:
+            settings = node.settings()
+            if 'image' in settings and 'labtainer' in settings['image']:
+                if labtainer_dir is None:
+                    log.error('IS LABTAINER: %s, but no LABTAINER_DIR env variable.' % device.name())
+                    return False
+                if labtainersGNS3.isHidden(settings['image'], log):
+                    return True
+            else:
+                 symbol = settings['symbol']
+                 if symbol.endswith('cloud.svg'):
+                     return True
+        return False 
