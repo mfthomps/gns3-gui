@@ -193,6 +193,40 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.uiDeleteProjectAction,
             self.uiImportExportConfigsAction
         ]
+        student_hide = [ self.uiNewProjectAction,
+            self.uiOpenProjectAction,
+            self.uiOpenApplianceAction,
+            self.uiSaveProjectAsAction,
+            self.uiExportProjectAction,
+            self.uiImportProjectAction,
+            self.uiImportExportConfigsAction,
+            self.uiScreenshotAction,
+            self.uiSnapshotAction,
+            self.uiCheckWorkAction,
+            self.uiLabManualAction,
+            self.uiRestartLabAction,
+            self.uiEditProjectAction,
+            self.uiDeleteProjectAction,
+            self.uiActionFullscreen,
+            self.uiZoomInAction,
+            self.uiZoomOutAction,
+            self.uiZoomResetAction,
+            self.uiFitInViewAction,
+            self.uiShowLayersAction,
+            self.uiResetPortLabelsAction,
+            self.uiShowPortNamesAction,
+            self.uiShowGridAction,
+            self.uiSnapToGridAction,
+            self.uiAddNoteAction,
+            self.uiInsertImageAction,
+            self.uiDrawRectangleAction,
+            self.uiDrawEllipseAction,
+            self.uiDrawLineAction,
+            self.uiEditReadmeAction,
+            self.uiReloadAllAction,
+            self.uiAuxConsoleAllAction,
+            self.uiConsoleAllAction,
+            self.uiSuspendAllAction]
 
         # This widgets are not enabled if it's a remote controller (no access to the local file system)
         self.disableWhenRemoteContollerWidgets = [
@@ -207,6 +241,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.uiTopologySummaryDockWidget.hide()
             self.uiComputeSummaryDockWidget.hide()
             self.uiConsoleDockWidget.hide()
+            for item in student_hide:
+                item.setVisible(False)
+            self.uiMenuBar.hide()
         else:
             ''' gns3 remembers layout changes, so force them back '''
             self.uiBrowsersToolBar.show()
@@ -1182,7 +1219,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         :param event: QCloseEvent
         """
 
-        if Topology.instance().project():
+        if Topology.instance().project() and not self.student:
             reply = QtWidgets.QMessageBox.question(self, "Confirm Exit", "Are you sure you want to exit GNS3?",
                                                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
             if reply == QtWidgets.QMessageBox.No:
