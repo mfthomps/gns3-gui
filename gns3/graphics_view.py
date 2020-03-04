@@ -914,10 +914,21 @@ class GraphicsView(QtWidgets.QGraphicsView):
                 delete_action.triggered.connect(self.deleteActionSlot)
                 menu.addAction(delete_action)
         if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "configFiles"), items)):
-            insert_thumb_action = QtWidgets.QAction("Insert thumb drive", menu)
-            insert_thumb_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
-            insert_thumb_action.triggered.connect(self.insertThumbDriveSlot)
-            menu.addAction(insert_thumb_action)
+            ''' assume first item is what we care about '''
+            node = items[0].node()
+            settings = node.settings()
+            if 'image' in settings and 'labtainer' in settings['image']:
+                if labtainersGNS3.hasThumb(settings['image'],  log):
+                    if not labtainersGNS3.isThumbInserted(settings['image'], log):
+                        insert_thumb_action = QtWidgets.QAction("Insert thumb drive", menu)
+                        insert_thumb_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
+                        insert_thumb_action.triggered.connect(self.insertThumbDriveSlot)
+                        menu.addAction(insert_thumb_action)
+                    else:
+                        remove_thumb_action = QtWidgets.QAction("Remove thumb drive", menu)
+                        remove_thumb_action.setIcon(QtGui.QIcon(':/icons/export_config.svg'))
+                        remove_thumb_action.triggered.connect(self.removeThumbDriveSlot)
+                        menu.addAction(remove_thumb_action)
 
     def startActionSlot(self):
         """
@@ -1248,6 +1259,26 @@ class GraphicsView(QtWidgets.QGraphicsView):
                     QtWidgets.QMessageBox.warning(self, "Console", "Thumb drivers cannot be inserted on this component.")
                 return
         print('Thumb drive inserted')
+
+    def removeThumbDriveSlot(self):
+        ''' simulate removal of a usb drive '''
+        items = self.scene().selectedItems()
+        if len(items) != 1:
+            QtWidgets.QMessageBox.critical(self, "Command line", "Please select only one item")
+            return
+        item = items[0]
+        if isinstance(item, NodeItem):
+            device = item.node()
+            settings = device.settings()
+            if 'image' in settings and 'labtainer' in settings['image']:
+                if labtainer_dir is None:
+                    log.error('IS LABTAINER: %s, but no LABTAINER_DIR env variable.' % device.name())
+                    return
+                log.debug('IS LABTAINER %s, do a thumb removal' % device.name())
+                if not labtainersGNS3.thumbRemove(settings['image'], log):
+                    QtWidgets.QMessageBox.warning(self, "Console", "Thumb drive cannot be removed from this component.")
+                return
+        print('Thumb drive removed')
 
     def exportConfigActionSlot(self):
         """
